@@ -112,3 +112,14 @@
     font-family: var(--font-heading);
   }
 }
+
+/* Nasconde scrollbar ma mantiene lo scroll */
+html, body {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE/Edge legacy */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari */
+}

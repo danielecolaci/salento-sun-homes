@@ -1,10 +1,28 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
-import heroImage from "@/assets/hero-beach.jpg";
+
+// Import delle immagini
+import img1 from "@/assets/hero/01.webp";
+import img2 from "@/assets/hero/02.webp";
+import img3 from "@/assets/hero/03.webp";
+import img4 from "@/assets/hero/04.webp";
+
+const images = [img1, img2, img3, img4];
 
 export function Hero() {
   const { t } = useI18n();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Logica per il cambio immagine ogni 5 secondi
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const scrollTo = (id: string) => {
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
@@ -12,15 +30,26 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="Hero">
+      {/* Background Slideshow */}
       <div className="absolute inset-0" aria-hidden="true">
-        <img
-          src={heroImage}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-foreground/40 to-foreground/70" />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt=""
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }} // "Transizione dolce"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </AnimatePresence>
+        
+        {/* Overlay per leggibilità testo */}
+        <div className="absolute inset-0 bg-linear-to-b from-foreground/60 via-foreground/40 to-foreground/70" />
       </div>
 
+      {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl pt-20">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
@@ -52,23 +81,6 @@ export function Hero() {
           <Button variant="heroOutline" size="lg" onClick={() => scrollTo("#features")}>
             {t("hero", "cta2")}
           </Button>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-12 flex flex-wrap justify-center gap-3"
-          aria-label="Badge"
-        >
-          {(["badgeBeach", "badgePet", "badgeAccessible"] as const).map((key) => (
-            <span
-              key={key}
-              className="bg-hero-bg-hover backdrop-blur-sm text-hero-foreground text-sm px-4 py-2 rounded-full border border-hero-border"
-            >
-              {t("hero", key)}
-            </span>
-          ))}
         </motion.div>
       </div>
     </section>
