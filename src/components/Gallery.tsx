@@ -2,22 +2,24 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useI18n, type Locale } from '@/lib/i18n';
-import beachImage from '@/assets/gallery/beach-crystal.jpg';
-import bedroomImage from '@/assets/gallery/bedroom.jpg';
-import kitchenImage from '@/assets/gallery/kitchen.jpg';
-import bathroomImage from '@/assets/gallery/bathroom.jpg';
-import courtyardImage from '@/assets/gallery/courtyard.jpg';
-import petImage from '@/assets/gallery/pet-beach.jpg';
-import accessibleImage from '@/assets/gallery/accessible-room.jpg';
+import one from '@/assets/gallery/01.jpg';
+import two from '@/assets/gallery/02.jpg';
+import three from '@/assets/gallery/03.jpg';
+import four from '@/assets/gallery/04.jpg';
+import five from '@/assets/gallery/05.jpg';
+import six from '@/assets/gallery/06.jpg';
+import seven from '@/assets/gallery/07.jpg';
+import eight from '@/assets/gallery/08.jpg';
 
 const images: Array<{ src: string; alt: Record<Locale, string> }> = [
-  { src: beachImage, alt: { it: 'Spiaggia cristallina di San Foca', en: 'Crystal clear San Foca beach' } },
-  { src: bedroomImage, alt: { it: 'Camera da letto luminosa e accogliente', en: 'Bright and cozy bedroom' } },
-  { src: kitchenImage, alt: { it: 'Cucina moderna e luminosa', en: 'Modern bright kitchen' } },
-  { src: courtyardImage, alt: { it: 'Cortile mediterraneo con piante', en: 'Mediterranean courtyard with plants' } },
-  { src: bathroomImage, alt: { it: 'Bagno elegante e moderno', en: 'Elegant modern bathroom' } },
-  { src: petImage, alt: { it: 'Vacanza al mare con animali domestici', en: 'Beach vacation with pets' } },
-  { src: accessibleImage, alt: { it: 'Ambiente accessibile e confortevole', en: 'Accessible and comfortable room' } }
+  { src: one, alt: { it: 'Soggiorno moderno e luminoso', en: 'Modern and bright living room' } },
+  { src: two, alt: { it: 'Camera da letto luminosa e accogliente', en: 'Bright and cozy bedroom' } },
+  { src: three, alt: { it: 'Cucina moderna e luminosa', en: 'Modern bright kitchen' } },
+  { src: four, alt: { it: 'Cortile mediterraneo con piante', en: 'Mediterranean courtyard with plants' } },
+  { src: five, alt: { it: 'Bagno elegante e moderno', en: 'Elegant modern bathroom' } },
+  { src: six, alt: { it: 'Vacanza al mare con animali domestici', en: 'Beach vacation with pets' } },
+  { src: seven, alt: { it: 'Ambiente accessibile e confortevole', en: 'Accessible and comfortable room' } },
+  { src: eight, alt: { it: 'Arredamento moderno ed elegante', en: 'Modern and elegant interior design' } }
 ];
 
 export function Gallery() {
@@ -47,7 +49,7 @@ export function Gallery() {
               transition={{ delay: i * 0.05 }}
               onClick={() => setSelected(i)}
               className={`overflow-hidden rounded-2xl cursor-pointer group focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
-                i === 0 ? 'col-span-2 row-span-2 aspect-square' : 'aspect-square'
+                i === 0 ? 'col-span-2 row-span-2' : i === 7 ? 'col-span-2 row-span-1' : 'col-span-1 row-span-1'
               }`}
               aria-label={img.alt[locale]}
             >
