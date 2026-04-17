@@ -1,15 +1,21 @@
-import { MessageCircle } from "lucide-react";
+function WhatsAppIcon({ className = 'w-7 h-7' }: { className?: string }) {
+  return (
+    <svg viewBox='0 0 32 32' className={className} fill='currentColor'>
+      <path d='M16 .396C7.163.396 0 7.559 0 16.396c0 2.887.754 5.706 2.184 8.187L.046 32l7.593-2.098a15.91 15.91 0 008.361 2.372c8.837 0 16-7.163 16-16S24.837.396 16 .396zm0 29.08a13.01 13.01 0 01-6.624-1.82l-.474-.282-4.506 1.245 1.204-4.387-.308-.45a12.96 12.96 0 01-2.003-6.987c0-7.188 5.85-13.038 13.038-13.038s13.038 5.85 13.038 13.038S23.188 29.476 16 29.476zm7.163-9.76c-.392-.196-2.32-1.144-2.678-1.274-.358-.13-.62-.196-.882.196-.261.392-1.013 1.274-1.243 1.536-.229.261-.458.294-.85.098-.392-.196-1.655-.61-3.153-1.946-1.166-1.04-1.954-2.325-2.183-2.717-.229-.392-.024-.604.172-.799.176-.175.392-.458.588-.686.196-.229.261-.392.392-.654.13-.261.065-.49-.033-.686-.098-.196-.882-2.124-1.209-2.912-.319-.765-.644-.661-.882-.673l-.752-.013c-.261 0-.686.098-1.046.49-.358.392-1.37 1.339-1.37 3.264 0 1.925 1.403 3.784 1.598 4.046.196.261 2.764 4.22 6.697 5.915.936.403 1.665.643 2.234.823.939.298 1.793.256 2.468.155.753-.112 2.32-.948 2.65-1.864.327-.915.327-1.699.229-1.864-.098-.163-.359-.261-.751-.458z' />
+    </svg>
+  );
+}
 
 export function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/393331234567"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-whatsapp text-primary-foreground rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-      aria-label="Contattaci su WhatsApp"
+      href='https://wa.me/393281853887'
+      target='_blank'
+      rel='noopener noreferrer'
+      className='fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] text-primary-foreground rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none'
+      aria-label='Contattaci su WhatsApp'
     >
-      <MessageCircle className="w-7 h-7" />
+      <WhatsAppIcon className='w-7 h-7' />
     </a>
   );
 }

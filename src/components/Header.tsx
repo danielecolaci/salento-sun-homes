@@ -10,6 +10,30 @@ import {
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
 
+function ItalyFlag({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg viewBox='0 0 3 2' className={className}>
+      <rect width='1' height='2' fill='#009246' />
+      <rect x='1' width='1' height='2' fill='#ffffff' />
+      <rect x='2' width='1' height='2' fill='#ce2b37' />
+    </svg>
+  );
+}
+
+function UKFlag({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg viewBox='0 0 60 30' className={className}>
+      <rect width='60' height='30' fill='#012169' />
+      <path d='M0,0 L60,30 M60,0 L0,30' stroke='#fff' strokeWidth='6' />
+      <path d='M0,0 L60,30 M60,0 L0,30' stroke='#C8102E' strokeWidth='4' />
+      <rect x='25' width='10' height='30' fill='#fff' />
+      <rect y='10' width='60' height='10' fill='#fff' />
+      <rect x='27' width='6' height='30' fill='#C8102E' />
+      <rect y='12' width='60' height='6' fill='#C8102E' />
+    </svg>
+  );
+}
+
 export function Header() {
   const { locale, setLocale, t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
@@ -73,14 +97,12 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className={`text-sm font-semibold px-3 py-1.5 rounded-full border transition-colors cursor-pointer ${
-                  scrolled
-                    ? 'border-border text-foreground hover:bg-muted'
-                    : 'border-hero-border text-hero-foreground hover:bg-hero-bg-hover'
+                className={`text-sm font-semibold px-3 py-1.5 rounded-full border transition-colors cursor-pointer border-none! ${
+                  scrolled ? 'text-foreground hover:bg-muted' : 'text-hero-foreground hover:bg-hero-bg-hover'
                 }`}
                 aria-label='Change language'
               >
-                <span className='flex items-center gap-1'>{locale === 'it' ? '🇮🇹' : '🇬🇧'}</span>
+                <span className='flex items-center gap-2'>{locale === 'it' ? <ItalyFlag /> : <UKFlag />}</span>
               </button>
             </DropdownMenuTrigger>
 

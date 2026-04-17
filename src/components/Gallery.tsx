@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useI18n, type Locale } from '@/lib/i18n';
+
 import one from '@/assets/gallery/01.jpg';
 import two from '@/assets/gallery/02.jpg';
 import three from '@/assets/gallery/03.jpg';
@@ -10,6 +11,7 @@ import five from '@/assets/gallery/05.jpg';
 import six from '@/assets/gallery/06.jpg';
 import seven from '@/assets/gallery/07.jpg';
 import eight from '@/assets/gallery/08.jpg';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images: Array<{ src: string; alt: Record<Locale, string> }> = [
   { src: one, alt: { it: 'Soggiorno moderno e luminoso', en: 'Modern and bright living room' } },
@@ -26,6 +28,29 @@ export function Gallery() {
   const { locale, t } = useI18n();
   const [selected, setSelected] = useState<number | null>(null);
 
+  // 👉 NAVIGAZIONE
+  const next = () => {
+    setSelected((prev) => (prev === null ? null : (prev + 1) % images.length));
+  };
+
+  const prev = () => {
+    setSelected((prev) => (prev === null ? null : (prev - 1 + images.length) % images.length));
+  };
+
+  // 👉 KEYBOARD SUPPORT
+  useEffect(() => {
+    if (selected === null) return;
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'Escape') setSelected(null);
+    };
+
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [selected]);
+
   return (
     <section id='gallery' className='py-20 md:py-28' aria-labelledby='gallery-title'>
       <div className='container mx-auto px-4'>
@@ -39,6 +64,7 @@ export function Gallery() {
           {t('gallery', 'title')}
         </motion.h2>
 
+        {/* GRID */}
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4'>
           {images.map((img, i) => (
             <motion.button
@@ -64,10 +90,38 @@ export function Gallery() {
         </div>
       </div>
 
+      {/* LIGHTBOX CAROUSEL */}
       <Dialog open={selected !== null} onOpenChange={() => setSelected(null)}>
-        <DialogContent className='max-w-4xl p-2 bg-card border-none rounded-2xl'>
+        <DialogContent className='max-w-6xl w-full p-0 bg-transparent border-none shadow-none'>
           {selected !== null && (
-            <img src={images[selected].src} alt={images[selected].alt[locale]} className='w-full h-auto rounded-xl' />
+            <div className='relative h-[80vh] flex items-center justify-center px-6'>
+              {' '}
+              {/* IMMAGINE */}
+              <motion.img
+                key={selected}
+                src={images[selected].src}
+                alt={images[selected].alt[locale]}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className='max-h-full max-w-[90%] object-contain rounded-2xl shadow-2xl'
+              />
+              <button
+                onClick={prev}
+                className='absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full backdrop-blur transition'
+                aria-label='Previous image'
+              >
+                <ChevronLeft className='w-6 h-6' />
+              </button>
+              <button
+                onClick={next}
+                className='absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full backdrop-blur transition'
+                aria-label='Next image'
+              >
+                <ChevronRight className='w-6 h-6' />
+              </button>
+            </div>
           )}
         </DialogContent>
       </Dialog>
