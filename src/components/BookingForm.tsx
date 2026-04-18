@@ -186,7 +186,12 @@ export function BookingForm() {
                           mode='single'
                           selected={checkIn}
                           onSelect={setCheckIn}
-                          disabled={(date) => date.getDay() !== 6}
+                          disabled={(date) => {
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+
+                            return date.getDay() !== 6 || date < today;
+                          }}
                           locale={locale === 'it' ? itLocale : enUS}
                           className='pointer-events-auto'
                         />
