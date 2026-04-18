@@ -29,7 +29,7 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
       title: 'Perché scegliere noi',
       items: [
         { icon: 'waves', title: '150 metri dal mare', desc: 'A pochi passi dalla splendida spiaggia di San Foca' },
-        { icon: 'users', title: 'Fino a 7 posti letto', desc: 'Spazi ampi per tutta la famiglia e gli amici' },
+        { icon: 'users', title: 'Fino a 9 posti letto', desc: 'Spazi ampi per tutta la famiglia e gli amici' },
         { icon: 'car', title: 'Parcheggio gratuito', desc: 'Posto auto dedicato incluso nel soggiorno' },
         { icon: 'paw', title: 'Pet friendly', desc: 'I tuoi amici a quattro zampe sono i benvenuti' },
         { icon: 'accessible', title: 'Accessibilità', desc: 'Soluzioni conformi alle normative per la disabilità' },
@@ -107,8 +107,8 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
     },
     footer: {
       contact: 'Contatti',
-      email: 'info@casevacanzesanfoca.it',
-      phone: '+39 333 1234567',
+      email: 'renatadonateo@gmail.com',
+      phone: '+39 328 185 3887',
       social: 'Seguici',
       privacy: 'Privacy Policy',
       rights: 'Tutti i diritti riservati',
@@ -139,7 +139,7 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
       title: 'Why choose us',
       items: [
         { icon: 'waves', title: '150m from the sea', desc: 'Just steps from the beautiful San Foca beach' },
-        { icon: 'users', title: 'Up to 7 beds', desc: 'Spacious for the whole family and friends' },
+        { icon: 'users', title: 'Up to 9 beds', desc: 'Spacious for the whole family and friends' },
         { icon: 'car', title: 'Free parking', desc: 'Dedicated parking included with your stay' },
         { icon: 'paw', title: 'Pet friendly', desc: 'Your four-legged friends are welcome' },
         { icon: 'accessible', title: 'Accessibility', desc: 'Solutions compliant with disability regulations' },
@@ -213,8 +213,8 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
     },
     footer: {
       contact: 'Contact',
-      email: 'info@casevacanzesanfoca.it',
-      phone: '+39 333 1234567',
+      email: 'renatadonateo@gmail.com',
+      phone: '+39 328 185 3887',
       social: 'Follow us',
       privacy: 'Privacy Policy',
       rights: 'All rights reserved',

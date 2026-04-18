@@ -14,8 +14,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useI18n } from '@/lib/i18n';
-import { supabase } from '@/integrations/supabase/client';
 import texture from '@/assets/texture.webp';
+import emailjs from '@emailjs/browser';
 
 export function BookingForm() {
   const { locale, t } = useI18n();
@@ -35,26 +35,49 @@ export function BookingForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!checkIn || !settimane || !nome.trim() || !email.trim() || !persone) return;
 
     setStatus('loading');
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (supabase as any).from('booking_requests').insert({
-        nome: nome.trim(),
-        email: email.trim(),
-        numero_persone: parseInt(persone),
-        check_in: format(checkIn, 'yyyy-MM-dd'),
-        check_out: format(checkOut!, 'yyyy-MM-dd'),
-        settimane_totali: parseInt(settimane),
-        pets_required: pets,
-        accessibility_required: accessibility,
-        messaggio: messaggio.trim() || null
-      });
 
-      if (error) throw error;
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          nome: nome.trim(),
+          email: email.trim(),
+          numero_persone: parseInt(persone),
+
+          check_in: format(checkIn, 'EEEE, d MMMM yyyy', {
+            locale: itLocale
+          }),
+          check_out: format(checkOut!, 'EEEE, d MMMM yyyy', {
+            locale: itLocale
+          }),
+          settimane_totali: parseInt(settimane),
+
+          pets_required: pets ? 'Sì' : 'No',
+          accessibility_required: accessibility ? 'Sì' : 'No',
+
+          messaggio: messaggio.trim() || '-'
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
       setStatus('success');
-    } catch {
+
+      // reset opzionale
+      setNome('');
+      setEmail('');
+      setPersone('');
+      setCheckIn(undefined);
+      setSettimane('');
+      setPets(false);
+      setAccessibility(false);
+      setMessaggio('');
+    } catch (error) {
+      console.error(error);
       setStatus('error');
     }
   };
@@ -133,7 +156,7 @@ export function BookingForm() {
                         <SelectValue placeholder='—' />
                       </SelectTrigger>
                       <SelectContent>
-                        {Array.from({ length: 10 }, (_, i) => (
+                        {Array.from({ length: 9 }, (_, i) => (
                           <SelectItem key={i + 1} value={String(i + 1)}>
                             {i + 1} {t('form', 'personeLabel')}
                           </SelectItem>
