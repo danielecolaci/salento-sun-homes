@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { useI18n, type Locale } from '@/lib/i18n';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 import one from '@/assets/gallery/01.jpg';
 import two from '@/assets/gallery/02.jpg';
@@ -11,7 +12,8 @@ import five from '@/assets/gallery/05.jpg';
 import six from '@/assets/gallery/06.jpg';
 import seven from '@/assets/gallery/07.jpg';
 import eight from '@/assets/gallery/08.jpg';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const images: Array<{ src: string; alt: Record<Locale, string> }> = [
   { src: one, alt: { it: 'Soggiorno moderno e luminoso', en: 'Modern and bright living room' } },
@@ -28,7 +30,6 @@ export function Gallery() {
   const { locale, t } = useI18n();
   const [selected, setSelected] = useState<number | null>(null);
 
-  // 👉 NAVIGAZIONE
   const next = () => {
     setSelected((prev) => (prev === null ? null : (prev + 1) % images.length));
   };
@@ -37,7 +38,6 @@ export function Gallery() {
     setSelected((prev) => (prev === null ? null : (prev - 1 + images.length) % images.length));
   };
 
-  // 👉 KEYBOARD SUPPORT
   useEffect(() => {
     if (selected === null) return;
 
@@ -64,7 +64,6 @@ export function Gallery() {
           {t('gallery', 'title')}
         </motion.h2>
 
-        {/* GRID */}
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4'>
           {images.map((img, i) => (
             <motion.button
@@ -90,13 +89,25 @@ export function Gallery() {
         </div>
       </div>
 
-      {/* LIGHTBOX CAROUSEL */}
       <Dialog open={selected !== null} onOpenChange={() => setSelected(null)}>
         <DialogContent className='max-w-6xl w-full p-0 bg-transparent border-none shadow-none'>
           {selected !== null && (
             <div className='relative h-[80vh] flex items-center justify-center px-6'>
-              {' '}
-              {/* IMMAGINE */}
+              <DialogTitle asChild>
+                <VisuallyHidden>
+                  <span>{images[selected].alt[locale]}</span>
+                </VisuallyHidden>
+              </DialogTitle>
+              {/* CLOSE BUTTON */}
+              <button
+                onClick={() => setSelected(null)}
+                className='absolute top-4 right-4 md:top-6 md:right-6 z-50 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur transition'
+                aria-label='Close gallery'
+              >
+                <X className='w-6 h-6' />
+              </button>
+
+              {/* IMAGE */}
               <motion.img
                 key={selected}
                 src={images[selected].src}
@@ -107,6 +118,8 @@ export function Gallery() {
                 transition={{ duration: 0.25 }}
                 className='max-h-full max-w-[90%] object-contain rounded-2xl shadow-2xl'
               />
+
+              {/* PREV */}
               <button
                 onClick={prev}
                 className='absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full backdrop-blur transition'
@@ -114,6 +127,8 @@ export function Gallery() {
               >
                 <ChevronLeft className='w-6 h-6' />
               </button>
+
+              {/* NEXT */}
               <button
                 onClick={next}
                 className='absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full backdrop-blur transition'
