@@ -18,7 +18,7 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
     hero: {
       title: 'Le tue vacanze a 150 metri dal mare di San Foca',
       subtitle:
-        '4 accoglienti case vacanze nel cuore del Salento, perfette per famiglie, gruppi, ospiti con animali e soggiorni accessibili',
+        '2 accoglienti case vacanze nel cuore del Salento, perfette per famiglie, gruppi, ospiti con animali e soggiorni accessibili',
       cta1: 'Verifica disponibilità',
       cta2: 'Scopri le soluzioni',
       badgeBeach: '🏖️ A 150m dal mare',
@@ -128,7 +128,7 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
     hero: {
       title: 'Your holiday 150 meters from the sea in San Foca',
       subtitle:
-        '4 welcoming vacation homes in the heart of Salento, perfect for families, groups, pet owners and accessible stays',
+        '2 welcoming vacation homes in the heart of Salento, perfect for families, groups, pet owners and accessible stays',
       cta1: 'Check availability',
       cta2: 'Explore our homes',
       badgeBeach: '🏖️ 150m from the sea',
