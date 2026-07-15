@@ -1,3 +1,5 @@
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
+
 function WhatsAppIcon({ className = 'w-7 h-7' }: { className?: string }) {
   return (
     <svg viewBox='0 0 32 32' className={className} fill='currentColor'>
@@ -9,7 +11,7 @@ function WhatsAppIcon({ className = 'w-7 h-7' }: { className?: string }) {
 export function WhatsAppButton() {
   return (
     <a
-      href='https://wa.me/393281853887'
+      href={buildWhatsAppUrl()}
       target='_blank'
       rel='noopener noreferrer'
       className='fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] text-primary-foreground rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none'

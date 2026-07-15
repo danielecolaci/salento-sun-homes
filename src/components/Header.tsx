@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
+import { Link, useLocation } from '@tanstack/react-router';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/lib/i18n';
+import { useGoToApartments } from '@/lib/useGoToApartments';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -36,11 +38,17 @@ function UKFlag({ className = 'w-5 h-5' }: { className?: string }) {
 
 export function Header() {
   const { locale, setLocale, t } = useI18n();
-  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const [scrolledPast, setScrolledPast] = useState(false);
   const [open, setOpen] = useState(false);
+  const goToApartments = useGoToApartments();
+
+  // Off the Home page there is no hero image behind the header, so it must always render solid.
+  const scrolled = scrolledPast || !isHome;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolledPast(window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -55,8 +63,19 @@ export function Header() {
 
   const scrollTo = (href: string) => {
     setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    if (isHome) {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
+
+  const handleApartmentsClick = () => {
+    setOpen(false);
+    goToApartments();
+  };
+
+  const navLinkClass = `text-sm font-medium transition-colors cursor-pointer ${
+    scrolled ? 'text-foreground hover:text-primary' : 'text-hero-foreground hover:text-hero-foreground/80'
+  }`;
 
   return (
     <header
@@ -66,28 +85,27 @@ export function Header() {
       role='banner'
     >
       <div className='container mx-auto px-4 flex items-center justify-between h-16 md:h-20'>
-        <a
-          href='#'
+        <Link
+          to='/'
           onClick={(e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (isHome) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
           }}
           className={`font-heading text-xl font-bold transition-colors ${
             scrolled ? 'text-foreground' : 'text-hero-foreground'
           }`}
         >
           San Foca Vacanze
-        </a>
+        </Link>
 
         <nav className='hidden md:flex items-center gap-6' aria-label='Navigazione principale'>
+          <button onClick={handleApartmentsClick} className={navLinkClass}>
+            {t('nav', 'apartments')}
+          </button>
           {navItems.map((item) => (
-            <button
-              key={item.href}
-              onClick={() => scrollTo(item.href)}
-              className={`text-sm font-medium transition-colors cursor-pointer ${
-                scrolled ? 'text-foreground hover:text-primary' : 'text-hero-foreground hover:text-hero-foreground/80'
-              }`}
-            >
+            <button key={item.href} onClick={() => scrollTo(item.href)} className={navLinkClass}>
               {item.label}
             </button>
           ))}
@@ -120,6 +138,12 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side='right'>
               <nav className='flex flex-col gap-4 mt-8' aria-label='Menu mobile'>
+                <button
+                  onClick={handleApartmentsClick}
+                  className='text-lg font-medium text-foreground hover:text-primary text-left cursor-pointer'
+                >
+                  {t('nav', 'apartments')}
+                </button>
                 {navItems.map((item) => (
                   <button
                     key={item.href}

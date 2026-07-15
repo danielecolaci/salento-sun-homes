@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, addWeeks } from 'date-fns';
 import { it as itLocale } from 'date-fns/locale/it';
@@ -14,13 +14,22 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useI18n } from '@/lib/i18n';
+import { apartments } from '@/data/apartments';
 import texture from '@/assets/texture.webp';
 import emailjs from '@emailjs/browser';
 
-export function BookingForm() {
+const NO_PREFERENCE = 'none';
+
+interface BookingFormProps {
+  /** Apartment slug carried over from a detail page's "Verifica disponibilità" CTA. */
+  preselectedApartment?: string;
+}
+
+export function BookingForm({ preselectedApartment }: BookingFormProps) {
   const { locale, t } = useI18n();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
+  const [appartamento, setAppartamento] = useState(preselectedApartment ?? NO_PREFERENCE);
   const [persone, setPersone] = useState('');
   const [checkIn, setCheckIn] = useState<Date | undefined>();
   const [settimane, setSettimane] = useState('');
@@ -28,6 +37,10 @@ export function BookingForm() {
   const [accessibility, setAccessibility] = useState(false);
   const [messaggio, setMessaggio] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    if (preselectedApartment) setAppartamento(preselectedApartment);
+  }, [preselectedApartment]);
   const isValid =
     nome.trim().length > 0 && email.trim().length > 0 && persone !== '' && checkIn !== undefined && settimane !== '';
 
@@ -40,6 +53,11 @@ export function BookingForm() {
 
     setStatus('loading');
 
+    const appartamentoLabel =
+      appartamento === NO_PREFERENCE
+        ? t('form', 'noPreference')
+        : (apartments.find((a) => a.slug === appartamento)?.name ?? appartamento);
+
     try {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -47,6 +65,7 @@ export function BookingForm() {
         {
           nome: nome.trim(),
           email: email.trim(),
+          appartamento: appartamentoLabel,
           numero_persone: parseInt(persone),
 
           check_in: format(checkIn, 'EEEE, d MMMM yyyy', {
@@ -70,6 +89,7 @@ export function BookingForm() {
       // reset opzionale
       setNome('');
       setEmail('');
+      setAppartamento(NO_PREFERENCE);
       setPersone('');
       setCheckIn(undefined);
       setSettimane('');
@@ -146,6 +166,25 @@ export function BookingForm() {
                       autoComplete='email'
                     />
                   </div>
+                </div>
+
+                <div className='space-y-2'>
+                  <Label id='appartamento-label'>{t('form', 'appartamento')}</Label>
+                  <Select value={appartamento} onValueChange={setAppartamento}>
+                    <SelectTrigger aria-labelledby='appartamento-label'>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={NO_PREFERENCE}>{t('form', 'noPreference')}</SelectItem>
+                      {apartments
+                        .filter((a) => !a.isPlaceholder)
+                        .map((a) => (
+                          <SelectItem key={a.slug} value={a.slug}>
+                            {a.name}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className='grid md:grid-cols-3 gap-6'>

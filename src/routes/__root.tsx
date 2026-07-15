@@ -1,4 +1,5 @@
-import { Outlet, Link, createRootRoute } from '@tanstack/react-router';
+import { Outlet, Link, createRootRoute, HeadContent } from '@tanstack/react-router';
+import { MotionConfig } from 'framer-motion';
 import { I18nProvider } from '@/lib/i18n';
 
 function NotFoundComponent() {
@@ -28,8 +29,11 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <I18nProvider>
-      <Outlet />
-    </I18nProvider>
+    <MotionConfig reducedMotion='user'>
+      <HeadContent />
+      <I18nProvider>
+        <Outlet />
+      </I18nProvider>
+    </MotionConfig>
   );
 }

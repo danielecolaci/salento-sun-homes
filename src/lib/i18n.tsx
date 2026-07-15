@@ -9,6 +9,7 @@ interface TranslationSection {
 const translations: Record<Locale, Record<string, TranslationSection>> = {
   it: {
     nav: {
+      apartments: 'Appartamenti',
       features: 'Caratteristiche',
       gallery: 'Gallery',
       location: 'Posizione',
@@ -28,24 +29,103 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
     features: {
       title: 'Perché scegliere noi',
       items: [
-        { icon: 'waves', title: '150 metri dal mare', desc: 'A pochi passi dalla splendida spiaggia di San Foca' },
-        { icon: 'users', title: 'Fino a 9 posti letto', desc: 'Spazi ampi per tutta la famiglia e gli amici' },
-        { icon: 'car', title: 'Parcheggio gratuito', desc: 'Posto auto dedicato incluso nel soggiorno' },
-        { icon: 'paw', title: 'Pet friendly', desc: 'I tuoi amici a quattro zampe sono i benvenuti' },
-        { icon: 'accessible', title: 'Accessibilità', desc: 'Soluzioni conformi alle normative per la disabilità' },
+        {
+          icon: 'waves',
+          title: '150 metri dal mare',
+          desc: 'A pochi passi dalla splendida spiaggia di San Foca'
+        },
+        {
+          icon: 'users',
+          title: 'Fino a 9 posti letto',
+          desc: 'Spazi ampi per tutta la famiglia e gli amici'
+        },
+        {
+          icon: 'car',
+          title: 'Parcheggio gratuito',
+          desc: 'Posto auto dedicato incluso nel soggiorno'
+        },
+        {
+          icon: 'paw',
+          title: 'Pet friendly',
+          desc: 'I tuoi amici a quattro zampe sono i benvenuti'
+        },
+        {
+          icon: 'accessible',
+          title: 'Accessibilità',
+          desc: 'Soluzioni conformi alle normative per la disabilità'
+        },
         {
           icon: 'shield',
           title: 'Conformi alle normative',
           desc: 'Appartamenti a norma per accessibilità e sicurezza'
         },
-        { icon: 'store', title: 'Vicino a tutto', desc: 'Negozi, ristoranti e servizi a portata di mano' },
-        { icon: 'baby', title: 'Perfetto per famiglie', desc: 'Ambienti sicuri e confortevoli per i più piccoli' },
-        { icon: 'footprints', title: 'Tutto a piedi', desc: 'Mare, centro e servizi raggiungibili a piedi' },
-        { icon: 'tree', title: 'Zona tranquilla', desc: 'Relax e tranquillità in un contesto residenziale' }
+        {
+          icon: 'store',
+          title: 'Vicino a tutto',
+          desc: 'Negozi, ristoranti e servizi a portata di mano'
+        },
+        {
+          icon: 'baby',
+          title: 'Perfetto per famiglie',
+          desc: 'Ambienti sicuri e confortevoli per i più piccoli'
+        },
+        {
+          icon: 'footprints',
+          title: 'Tutto a piedi',
+          desc: 'Mare, centro e servizi raggiungibili a piedi'
+        },
+        {
+          icon: 'tree',
+          title: 'Zona tranquilla',
+          desc: 'Relax e tranquillità in un contesto residenziale'
+        }
       ] as unknown as string
     },
     gallery: {
       title: 'I nostri ambienti'
+    },
+    galleryLabels: {
+      bagno: 'Bagno',
+      balcone: 'Balcone',
+      giardino: 'Giardino',
+      letto: 'Camera da letto',
+      cucina: 'Cucina',
+      'soggiorno-cucina': 'Soggiorno con cucina',
+      'soggiorno-divano': 'Soggiorno con divano',
+      'letto-doppia': 'Camera doppia',
+      'letto-matrimoniale': 'Camera matrimoniale'
+    },
+    apartmentsHome: {
+      title: 'I nostri appartamenti',
+      intro: 'Due case vacanze indipendenti a San Foca, ognuna con il proprio carattere: scopri quale fa per te.',
+      upTo: 'Fino a',
+      guests: 'ospiti',
+      cta: "Scopri l'appartamento",
+      comingSoon: 'Contenuti in arrivo'
+    },
+    apartmentDetail: {
+      breadcrumbAriaLabel: 'Percorso di navigazione',
+      breadcrumbHome: 'Home',
+      breadcrumbApartments: 'Appartamenti',
+      titlePrefix: 'Appartamento',
+      guests: 'posti letto',
+      ctaAvailability: 'Verifica disponibilità',
+      ctaContact: 'Contattaci',
+      overviewTitle: 'Panoramica',
+      galleryTitle: 'Galleria',
+      locationTitle: 'Dove siamo',
+      openInMaps: 'Apri in Maps',
+      contactTitle: 'Hai domande?',
+      contactSubtitle: 'Siamo qui per aiutarti!',
+      contactText: 'Contattaci su WhatsApp o chiamaci per qualsiasi informazione.',
+      contactWhatsapp: 'Contattaci su WhatsApp',
+      callUs: 'Chiamaci o scrivici',
+      photoPending: 'Foto in arrivo',
+      placeholderNotice:
+        'Pagina in preparazione: nome, descrizione, dotazioni e foto reali di questo appartamento saranno pubblicati a breve.',
+      notFoundTitle: 'Appartamento non trovato',
+      notFoundText: "L'appartamento che cerchi non esiste o è stato spostato.",
+      backToApartments: 'Torna agli appartamenti'
     },
     description: {
       title: 'La tua esperienza a San Foca',
@@ -62,6 +142,8 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
       nome: 'Nome e Cognome',
       email: 'Email',
       persone: 'Numero di persone',
+      appartamento: 'Appartamento',
+      noPreference: 'Nessuna preferenza',
       checkin: 'Check-in (sabato)',
       settimane: 'Numero settimane',
       checkout: 'Check-out (sabato)',
@@ -106,6 +188,8 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
       button: 'Richiedi disponibilità ora'
     },
     footer: {
+      usefulLinks: 'Link utili',
+      home: 'Home',
       contact: 'Contatti',
       email: 'renatadonateo@gmail.com',
       phone: '+39 328 185 3887',
@@ -119,6 +203,7 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
   },
   en: {
     nav: {
+      apartments: 'Apartments',
       features: 'Features',
       gallery: 'Gallery',
       location: 'Location',
@@ -138,20 +223,87 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
     features: {
       title: 'Why choose us',
       items: [
-        { icon: 'waves', title: '150m from the sea', desc: 'Just steps from the beautiful San Foca beach' },
+        {
+          icon: 'waves',
+          title: '150m from the sea',
+          desc: 'Just steps from the beautiful San Foca beach'
+        },
         { icon: 'users', title: 'Up to 9 beds', desc: 'Spacious for the whole family and friends' },
         { icon: 'car', title: 'Free parking', desc: 'Dedicated parking included with your stay' },
         { icon: 'paw', title: 'Pet friendly', desc: 'Your four-legged friends are welcome' },
-        { icon: 'accessible', title: 'Accessibility', desc: 'Solutions compliant with disability regulations' },
-        { icon: 'shield', title: 'Fully compliant', desc: 'Apartments meeting accessibility and safety standards' },
-        { icon: 'store', title: 'Close to everything', desc: 'Shops, restaurants and services within reach' },
-        { icon: 'baby', title: 'Family friendly', desc: 'Safe and comfortable for the little ones' },
-        { icon: 'footprints', title: 'Everything on foot', desc: 'Sea, town center and services all walkable' },
+        {
+          icon: 'accessible',
+          title: 'Accessibility',
+          desc: 'Solutions compliant with disability regulations'
+        },
+        {
+          icon: 'shield',
+          title: 'Fully compliant',
+          desc: 'Apartments meeting accessibility and safety standards'
+        },
+        {
+          icon: 'store',
+          title: 'Close to everything',
+          desc: 'Shops, restaurants and services within reach'
+        },
+        {
+          icon: 'baby',
+          title: 'Family friendly',
+          desc: 'Safe and comfortable for the little ones'
+        },
+        {
+          icon: 'footprints',
+          title: 'Everything on foot',
+          desc: 'Sea, town center and services all walkable'
+        },
         { icon: 'tree', title: 'Quiet area', desc: 'Relaxation in a peaceful residential setting' }
       ] as unknown as string
     },
     gallery: {
       title: 'Our spaces'
+    },
+    galleryLabels: {
+      bagno: 'Bathroom',
+      balcone: 'Balcony',
+      giardino: 'Garden',
+      letto: 'Bedroom',
+      cucina: 'Kitchen',
+      'soggiorno-cucina': 'Living room with kitchen',
+      'soggiorno-divano': 'Living room with sofa',
+      'letto-doppia': 'Twin room',
+      'letto-matrimoniale': 'Double bedroom'
+    },
+    apartmentsHome: {
+      title: 'Our apartments',
+      intro: 'Two independent vacation homes in San Foca, each with its own character: find out which one suits you.',
+      upTo: 'Up to',
+      guests: 'guests',
+      cta: 'Discover the apartment',
+      comingSoon: 'Content coming soon'
+    },
+    apartmentDetail: {
+      breadcrumbAriaLabel: 'Breadcrumb',
+      breadcrumbHome: 'Home',
+      breadcrumbApartments: 'Apartments',
+      titlePrefix: 'Apartment',
+      guests: 'guests',
+      ctaAvailability: 'Check availability',
+      ctaContact: 'Contact us',
+      overviewTitle: 'Overview',
+      galleryTitle: 'Gallery',
+      locationTitle: 'Where we are',
+      openInMaps: 'Open in Maps',
+      contactTitle: 'Have questions?',
+      contactSubtitle: "We're here to help!",
+      contactText: 'Contact us on WhatsApp or call us for any information.',
+      contactWhatsapp: 'Contact us on WhatsApp',
+      callUs: 'Call or write to us',
+      photoPending: 'Photo coming soon',
+      placeholderNotice:
+        "Page in progress: this apartment's real name, description, amenities and photos will be published soon.",
+      notFoundTitle: 'Apartment not found',
+      notFoundText: 'The apartment you are looking for does not exist or has been moved.',
+      backToApartments: 'Back to apartments'
     },
     description: {
       title: 'Your experience in San Foca',
@@ -168,6 +320,8 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
       nome: 'Full Name',
       email: 'Email',
       persone: 'Number of guests',
+      appartamento: 'Apartment',
+      noPreference: 'No preference',
       checkin: 'Check-in (Saturday)',
       settimane: 'Number of weeks',
       checkout: 'Check-out (Saturday)',
@@ -212,6 +366,8 @@ const translations: Record<Locale, Record<string, TranslationSection>> = {
       button: 'Request availability now'
     },
     footer: {
+      usefulLinks: 'Useful links',
+      home: 'Home',
       contact: 'Contact',
       email: 'renatadonateo@gmail.com',
       phone: '+39 328 185 3887',
