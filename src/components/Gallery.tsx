@@ -11,6 +11,9 @@ interface GalleryProps {
   /** Section id, also used to derive the heading id (e.g. "gallery" -> "gallery-title"). */
   id: string;
   title: string;
+  /** Optional small label above the title (e.g. an apartment name), styled with the caller's accent color. */
+  eyebrow?: string;
+  eyebrowClassName?: string;
   /** Always exactly 8 photos in practice, which drives the editorial grid below. */
   images: GalleryImage[];
 }
@@ -19,7 +22,7 @@ interface GalleryProps {
  * Photo grid + lightbox shared by the Home gallery and every apartment detail page,
  * so all three present the exact same browsing experience with their own photos.
  */
-export function Gallery({ id, title, images }: GalleryProps) {
+export function Gallery({ id, title, eyebrow, eyebrowClassName, images }: GalleryProps) {
   const [selected, setSelected] = useState<number | null>(null);
 
   if (images.length === 0) return null;
@@ -30,15 +33,21 @@ export function Gallery({ id, title, images }: GalleryProps) {
   return (
     <section id={id} className='py-20 md:py-28' aria-labelledby={`${id}-title`}>
       <div className='container mx-auto px-4'>
-        <motion.h2
-          id={`${id}-title`}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className='text-3xl md:text-4xl font-bold text-center mb-16'
+          className='mb-16 text-center'
         >
-          {title}
-        </motion.h2>
+          {eyebrow && (
+            <span className={`text-sm font-semibold tracking-wide uppercase ${eyebrowClassName ?? 'text-primary'}`}>
+              {eyebrow}
+            </span>
+          )}
+          <h2 id={`${id}-title`} className='mt-2 text-3xl font-bold tracking-tight md:text-4xl'>
+            {title}
+          </h2>
+        </motion.div>
 
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4'>
           {images.map((img, i) => (
@@ -49,7 +58,7 @@ export function Gallery({ id, title, images }: GalleryProps) {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
               onClick={() => setSelected(i)}
-              className={`overflow-hidden rounded-2xl cursor-pointer group focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+              className={`group cursor-pointer overflow-hidden rounded-2xl shadow-sm ring-1 ring-border/60 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                 i === 0 ? 'col-span-2 row-span-2' : i === 7 ? 'col-span-2 row-span-1' : 'col-span-1 row-span-1'
               }`}
               aria-label={img.alt}

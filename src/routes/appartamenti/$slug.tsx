@@ -59,17 +59,17 @@ function ApartmentDetailPage() {
     <>
       <Header />
       <main id='main-content'>
-        <div className='container mx-auto px-4 pt-24 md:pt-28'>
+        <div className='container mx-auto px-4 pt-24 pb-4 md:pt-28 md:pb-6'>
           <Breadcrumb aria-label={t('apartmentDetail', 'breadcrumbAriaLabel')}>
-            <BreadcrumbList>
+            <BreadcrumbList className='text-[13px] sm:text-sm'>
               <BreadcrumbItem>
-                <BreadcrumbLink asChild>
+                <BreadcrumbLink asChild className='font-medium'>
                   <Link to='/'>{t('apartmentDetail', 'breadcrumbHome')}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink asChild>
+                <BreadcrumbLink asChild className='font-medium'>
                   <button type='button' onClick={goToApartments}>
                     {t('apartmentDetail', 'breadcrumbApartments')}
                   </button>
@@ -77,7 +77,7 @@ function ApartmentDetailPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>{apartment.name}</BreadcrumbPage>
+                <BreadcrumbPage className='font-semibold text-foreground'>{apartment.name}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
